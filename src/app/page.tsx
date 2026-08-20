@@ -1,71 +1,56 @@
 "use client";
 
-import {
-  differenceInMilliseconds,
-  differenceInSeconds,
-  Duration,
-  intervalToDuration,
-} from "date-fns";
+import { differenceInWeeks } from "date-fns";
 import { useEffect, useState } from "react";
 
 const dates = {
-  engagement: "2024-05-26T14:52:00",
+  start: "2026-07-01T00:00:00",
 };
 
+const TOTAL_WEEKS = 40;
+
 export default function Home() {
-  const [duration, setDuration] = useState<Duration>({
-    years: 0,
-    months: 0,
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [elapsedWeeks, setElapsedWeeks] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setDuration(timeUntil(dates.engagement));
-    }, 1000);
+    const update = () => {
+      const weeks = Math.max(
+        0,
+        differenceInWeeks(new Date(), new Date(dates.start))
+      );
+      setElapsedWeeks(Math.min(weeks, TOTAL_WEEKS));
+    };
+
+    update();
+    const interval = setInterval(update, 1000 * 60);
 
     return () => clearInterval(interval);
   }, []);
 
+  const remainingWeeks = TOTAL_WEEKS - elapsedWeeks;
+
   return (
     <main className="h-[80vh] lg:h-[90vh] flex flex-col justify-center items-center gap-y-48 p-4">
-      <div className="blue-gradient backdrop-blur-2xl">
+      <div className="pink-gradient backdrop-blur-2xl">
         <h1 className="text-5xl p-6">
           J<span className="opacity-50">yoti</span>
           <br />S<span className="opacity-50">ameer</span>
         </h1>
       </div>
 
-      <div className="flex flex-col items-center gap-4">
-        <h2 className="text-2xl font-semibold">Engaged since</h2>
-        <div className="justify-center text-sm opacity-50 flex flex-col gap-2">
-          <div className="justify-center flex gap-2">
-            <span>{duration.years ?? 0} years</span>
-            <span>{duration.months ?? 0} months</span>
-            <span>{duration.days ?? 0} days</span>
+      <div className="flex flex-col items-center gap-6">
+        <h2 className="text-2xl font-semibold">Counting down the weeks</h2>
+        <div className="flex gap-10">
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-4xl font-bold">{elapsedWeeks}</span>
+            <span className="text-sm opacity-50">weeks down</span>
           </div>
-          <div className="justify-center flex gap-2">
-            <span>{duration.hours ?? 0} hrs</span>
-            <span>{duration.minutes ?? 0} mins</span>
-            <span>{duration.seconds ?? 0} secs</span>
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-4xl font-bold">{remainingWeeks}</span>
+            <span className="text-sm opacity-50">weeks to go</span>
           </div>
         </div>
       </div>
     </main>
   );
-}
-
-function timeUntil(targetDate: string) {
-  const now = new Date();
-  const target = new Date(targetDate);
-
-  const diff = Math.abs(differenceInMilliseconds(now, target));
-
-  return intervalToDuration({
-    start: 0,
-    end: diff,
-  });
 }

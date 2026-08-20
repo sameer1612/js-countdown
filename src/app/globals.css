@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-  background: #06080a;
-  color: ghostwhite;
+  background: #fdf1f5;
+  color: #5b3a4a;
 }
 
-.blue-gradient {
-  background: #06080a;
-  background: radial-gradient(rgba(7, 24, 79, 1) 0%, rgba(6, 8, 10, 1) 50%);
+.pink-gradient {
+  background: #fdf1f5;
+  background: radial-gradient(rgba(255, 214, 232, 1) 0%, rgba(253, 241, 245, 1) 50%);
 }
 
 @layer utilities {
