@@ -9,11 +9,40 @@ body {
 
 .pink-gradient {
   background: #fdf1f5;
-  background: radial-gradient(rgba(255, 214, 232, 1) 0%, rgba(253, 241, 245, 1) 50%);
+  background: radial-gradient(
+    rgba(255, 214, 232, 1) 0%,
+    rgba(253, 241, 245, 1) 50%
+  );
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  15% {
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  45% {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-heartbeat {
+    animation: none;
   }
 }
