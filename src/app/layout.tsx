@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Jyoti-Sameer",
   description: "Waiting with love.",
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
+    icon: "/heart.svg",
+    shortcut: "/heart.svg",
     apple: "/logo.png",
   },
   openGraph: {
